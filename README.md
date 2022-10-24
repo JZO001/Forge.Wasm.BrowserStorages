@@ -186,4 +186,13 @@ builder.Services.AddForgeLocalStorage();
 builder.Services.Replace(ServiceDescriptor.Scoped<Forge.Wasm.BrowserStorages.Serialization.LocalStorage.ISerializationProvider, CustomSerializer>());
 ```
 
-Please check the Newtonsoft.Json serializer implementation for this library at Github, called Forge.Wasm.BrowserStorages.NewtonSoft.Json
+A Newtonsoft.Json serializer implementation for this library at Github created, called Forge.Wasm.BrowserStorages.NewtonSoft.Json
+
+Please also check the following projects in my repositories:
+- Forge.Yoda
+- Forge.Security.Jwt.Service
+- Forge.Security.Jwt.Service.Storage.SqlServer
+- Forge.Security.Jwt.Client
+- Forge.Security.Jwt.Client.Storage.Browser
+- Forge.Wasm.BrowserStorages
+- Forge.Wasm.BrowserStorages.NewtonSoft.Json
