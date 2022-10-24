@@ -26,7 +26,7 @@
 
 	<PropertyGroup>
 		<DocumentationFile>Forge.Wasm.BrowserStorages.xml</DocumentationFile>
-		<RepositoryUrl>https://github.com/JZO001/Forge</RepositoryUrl>
+		<RepositoryUrl>https://github.com/JZO001/Forge.Wasm.BrowserStorages</RepositoryUrl>
 	</PropertyGroup>
 
 	<PropertyGroup Condition="'$(TargetFramework)' == 'netstandard2.0'">
