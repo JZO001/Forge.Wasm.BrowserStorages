@@ -45,6 +45,24 @@ public static async Task Main(string[] args)
 }
 ```
 
+In the case, if IJSInProcessRuntime does not available in your project type, you can not use the syncronized version of the storage.
+It is possible to skip the registration of the sync providers and services which are requires the implementation of this interface,
+use the following code to archieve it:
+
+```c#
+public static async Task Main(string[] args)
+{
+    var builder = WebAssemblyHostBuilder.CreateDefault(args);
+    builder.RootComponents.Add<App>("app");
+
+    builder.Services.AddForgeLocalStorageAsyncOnly();
+    builder.Services.AddForgeSessionStorageAsyncOnly();
+
+    await builder.Build().RunAsync();
+}
+```
+
+
 ### Registering services as Singleton
 If you would like to register LocalStorage or SessionStorage services as singletons, it is possible by using the following method:
 
@@ -53,7 +71,15 @@ builder.Services.AddForgeLocalStorageAsSingleton();
 builder.Services.AddForgeSessionStorageAsSingleton();
 ```
 
+Or
+
+```csharp
+builder.Services.AddForgeLocalStorageAsyncOnlyAsSingleton();
+builder.Services.AddForgeSessionStorageAsyncOnlyAsSingleton();
+```
+
 This method is not recommended in the most cases, try to avoid using it.
+
 
 ## Usage
 To use Forge.Wasm.BrowserStorages in Blazor WebAssembly, inject the `ILocalStorageServiceAsync` | `ISessionStorageServiceAsync` per the example below.

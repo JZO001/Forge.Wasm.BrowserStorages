@@ -70,6 +70,62 @@ namespace Forge.Wasm.BrowserStorages.Services.SessionStorage
                 });
         }
 
+        /// <summary>
+        /// Registers the Forge SessionStorage services as scoped. Only the async providers will be registered.
+        /// </summary>
+        /// <returns>IServiceCollection</returns>
+        public static IServiceCollection AddForgeSessionStorageAsyncOnly(this IServiceCollection services)
+            => services.AddForgeSessionStorageAsyncOnly(null);
+
+        /// <summary>
+        /// Registers the Forge SessionStorage services as scoped.
+        /// </summary>
+        /// <returns>IServiceCollection</returns>
+        public static IServiceCollection AddForgeSessionStorageAsyncOnly(this IServiceCollection services, Action<SessionStorageOptions> configure)
+        {
+            return services
+                .AddScoped<ISerializationProvider, JsonSerializer>()
+                .AddScoped<ISessionStorageProviderAsync, SessionStorageProviderAsync>()
+                .AddScoped<ISessionStorageServiceAsync, SessionStorageServiceAsync>()
+                .Configure<SessionStorageOptions>(configureOptions =>
+                {
+                    configure?.Invoke(configureOptions);
+                    configureOptions.SerializeOptions.Converters.Add(new TimespanJsonConverter());
+                    configureOptions.DeserializeOptions.Converters.Add(new TimespanJsonConverter());
+                });
+        }
+
+        /// <summary>
+        /// Registers the Forge SessionStorage services as singletons. Only the async providers will be registered. 
+        /// This should only be used in Blazor WebAssembly applications.
+        /// Using this in Blazor Server applications will cause unexpected and potentially dangerous behaviour. 
+        /// </summary>
+        /// <returns>IServiceCollection</returns>
+        public static IServiceCollection AddForgeSessionStorageAsyncOnlyAsSingleton(this IServiceCollection services)
+            => services.AddForgeSessionStorageAsyncOnlyAsSingleton(null);
+
+        /// <summary>
+        /// Registers the Forge SessionStorage services as singletons. Only the async providers will be registered.
+        /// This should only be used in Blazor WebAssembly applications.
+        /// Using this in Blazor Server applications will cause unexpected and potentially dangerous behaviour. 
+        /// </summary>
+        /// <param name="services"></param>
+        /// <param name="configure"></param>
+        /// <returns>IServiceCollection</returns>
+        public static IServiceCollection AddForgeSessionStorageAsyncOnlyAsSingleton(this IServiceCollection services, Action<SessionStorageOptions> configure)
+        {
+            return services
+                .AddSingleton<ISerializationProvider, JsonSerializer>()
+                .AddSingleton<ISessionStorageProviderAsync, SessionStorageProviderAsync>()
+                .AddSingleton<ISessionStorageServiceAsync, SessionStorageServiceAsync>()
+                .Configure<SessionStorageOptions>(configureOptions =>
+                {
+                    configure?.Invoke(configureOptions);
+                    configureOptions.SerializeOptions.Converters.Add(new TimespanJsonConverter());
+                    configureOptions.DeserializeOptions.Converters.Add(new TimespanJsonConverter());
+                });
+        }
+
     }
 
 }

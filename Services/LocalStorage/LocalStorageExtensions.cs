@@ -70,6 +70,62 @@ namespace Forge.Wasm.BrowserStorages.Services.LocalStorage
                 });
         }
 
+        /// <summary>
+        /// Registers the Forge LocalStorage services as scoped. Only the async providers will be registered.
+        /// </summary>
+        /// <returns>IServiceCollection</returns>
+        public static IServiceCollection AddForgeLocalStorageAsyncOnly(this IServiceCollection services)
+            => services.AddForgeLocalStorageAsyncOnly(null);
+
+        /// <summary>
+        /// Registers the Forge LocalStorage services as scoped.
+        /// </summary>
+        /// <returns>IServiceCollection</returns>
+        public static IServiceCollection AddForgeLocalStorageAsyncOnly(this IServiceCollection services, Action<LocalStorageOptions> configure)
+        {
+            return services
+                .AddScoped<ISerializationProvider, JsonSerializer>()
+                .AddScoped<ILocalStorageProviderAsync, LocalStorageProviderAsync>()
+                .AddScoped<ILocalStorageServiceAsync, LocalStorageServiceAsync>()
+                .Configure<LocalStorageOptions>(configureOptions =>
+                {
+                    configure?.Invoke(configureOptions);
+                    configureOptions.SerializeOptions.Converters.Add(new TimespanJsonConverter());
+                    configureOptions.DeserializeOptions.Converters.Add(new TimespanJsonConverter());
+                });
+        }
+
+        /// <summary>
+        /// Registers the Forge LocalStorage services as singletons. Only the async providers will be registered. 
+        /// This should only be used in Blazor WebAssembly applications.
+        /// Using this in Blazor Server applications will cause unexpected and potentially dangerous behaviour. 
+        /// </summary>
+        /// <returns>IServiceCollection</returns>
+        public static IServiceCollection AddForgeLocalStorageAsyncOnlyAsSingleton(this IServiceCollection services)
+            => services.AddForgeLocalStorageAsyncOnlyAsSingleton(null);
+
+        /// <summary>
+        /// Registers the Forge LocalStorage services as singletons. Only the async providers will be registered.
+        /// This should only be used in Blazor WebAssembly applications.
+        /// Using this in Blazor Server applications will cause unexpected and potentially dangerous behaviour. 
+        /// </summary>
+        /// <param name="services"></param>
+        /// <param name="configure"></param>
+        /// <returns>IServiceCollection</returns>
+        public static IServiceCollection AddForgeLocalStorageAsyncOnlyAsSingleton(this IServiceCollection services, Action<LocalStorageOptions> configure)
+        {
+            return services
+                .AddSingleton<ISerializationProvider, JsonSerializer>()
+                .AddSingleton<ILocalStorageProviderAsync, LocalStorageProviderAsync>()
+                .AddSingleton<ILocalStorageServiceAsync, LocalStorageServiceAsync>()
+                .Configure<LocalStorageOptions>(configureOptions =>
+                {
+                    configure?.Invoke(configureOptions);
+                    configureOptions.SerializeOptions.Converters.Add(new TimespanJsonConverter());
+                    configureOptions.DeserializeOptions.Converters.Add(new TimespanJsonConverter());
+                });
+        }
+
     }
 
 }
