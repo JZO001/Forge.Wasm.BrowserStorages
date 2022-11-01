@@ -26,7 +26,7 @@ You will need to register the local storage services with the service collection
 public void ConfigureServices(IServiceCollection services)
 {
     services.AddForgeLocalStorage();
-	services.AddForgeSessionStorage();
+    services.AddForgeSessionStorage();
 }
 ``` 
 
@@ -137,11 +137,11 @@ It can be one of possible way to detect the synchronous mode support, if you try
 
     protected override async Task OnAfterRenderAsync(bool firstRender)
     {
-		// localStorage example
+	// localStorage example
         await localStorage.Set("Username", "john_doe");
         var usernameFromLocalStorage = await localStorage.Get<string>("Username");
 
-		// sessionStorage example
+	// sessionStorage example
         await sessionStorage.Set("Username", "john_doe");
         var usernameFromSessionStorage = await sessionStorage.Get<string>("Username");
     }
@@ -184,16 +184,16 @@ public static async Task Main(string[] args)
     var builder = WebAssemblyHostBuilder.CreateDefault(args);
     builder.RootComponents.Add<App>("app");
 
-	// for localStorage
+    // for localStorage
     builder.Services.AddForgeLocalStorage(config =>
-		// these are the defaults, this code is for demonstration purposes
+	// these are the defaults, this code is for demonstration purposes
         config.SerializeOptions.PropertyNamingPolicy = JsonNamingPolicy.CamelCase;
         config.DeserializeOptions.PropertyNameCaseInsensitive = true;
     );
 
-	// for sessionStorage
+    // for sessionStorage
     builder.Services.AddForgeSessionStorage(config =>
-		// these are the defaults, this code is for demonstration purposes
+	// these are the defaults, this code is for demonstration purposes
         config.SerializeOptions.PropertyNamingPolicy = JsonNamingPolicy.CamelCase;
         config.DeserializeOptions.PropertyNameCaseInsensitive = true;
     );
