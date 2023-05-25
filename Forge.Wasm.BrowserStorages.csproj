@@ -10,7 +10,7 @@
 	<PropertyGroup>
 		<TargetFrameworks>netstandard2.0;netcoreapp3.1;net6.0;net7.0</TargetFrameworks>
 		<SignAssembly>true</SignAssembly>
-		<AssemblyOriginatorKeyFile>..\.Documents\Forge.pfx</AssemblyOriginatorKeyFile>
+		<AssemblyOriginatorKeyFile>..\..\.Documents\Forge.pfx</AssemblyOriginatorKeyFile>
 		<ProjectGuid>{D9CFE0EF-5091-4748-970A-497FB07B2A29}</ProjectGuid>
 		<DocumentationFile>Forge.Wasm.BrowserStorages.xml</DocumentationFile>
 	</PropertyGroup>
@@ -56,15 +56,16 @@
 	</ItemGroup>
 
 	<ItemGroup>
+		<None Remove="Forge.Wasm.BrowserStorages.csproj.vspscc" />
 		<None Remove="Forge.Wasm.BrowserStorages.xml" />
 	</ItemGroup>
 
 	<ItemGroup>
-		<None Include="..\LICENSE">
+		<None Include="LICENSE">
 			<Pack>True</Pack>
 			<PackagePath>\</PackagePath>
 		</None>
-		<None Include="..\README.md">
+		<None Include="README.md">
 			<Pack>True</Pack>
 			<PackagePath>\</PackagePath>
 		</None>
